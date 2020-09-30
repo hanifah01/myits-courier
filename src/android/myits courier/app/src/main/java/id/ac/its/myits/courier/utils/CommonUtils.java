@@ -38,7 +38,8 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import id.ac.its.eperkantoran.R;
+import id.ac.its.myits.courier.R;
+
 
 /**
  * Created by janisharali on 27/01/17.

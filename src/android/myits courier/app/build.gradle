@@ -10,15 +10,33 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "SERVER_URL", "\"http://dev.myserver.com\""
+            buildConfigField "String", "API_KEY", "\"MEtxYVBUS3lwYXB5V1VSOU1aSUxaVnh0YTEwYTpjQXFEc004aGhFTEw4WmJuSGY3c2Q4eE5GSTRh\""
+            buildConfigField "String", "APP_TOKEN", "\"c6bfed35-68cc-3dd0-89c4-5ec6fddaadbd\""
+
+
+        }
         release {
+            buildConfigField "String", "SERVER_URL", "\"http://dev.myserver.com\""
+            buildConfigField "String", "API_KEY", "\"MEtxYVBUS3lwYXB5V1VSOU1aSUxaVnh0YTEwYTpjQXFEc004aGhFTEw4WmJuSGY3c2Q4eE5GSTRh\""
+            buildConfigField "String", "APP_TOKEN", "\"c6bfed35-68cc-3dd0-89c4-5ec6fddaadbd\""
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
+    }
+    packagingOptions {
+        exclude 'META-INF/rxjava.properties'
+        exclude 'com/itextpdf/io/font/cmap_info.txt'
+        exclude 'com/itextpdf/io/font/cmap/*'
+    }
+    compileOptions {
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -30,6 +48,8 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
 
+    implementation 'com.google.android.material:material:1.0.0'
+
     //logger
     implementation "com.jakewharton.timber:timber:4.7.1"
 
@@ -40,8 +60,11 @@ dependencies {
     implementation "com.amitshekhar.android:rx2-android-networking:1.0.2"
 
     // dependency injection
-    implementation 'com.google.dagger:dagger:2.28'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.28'
+    implementation 'com.google.dagger:dagger:2.27'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.27'
+    implementation "com.google.dagger:dagger-android-support:2.27"
+    annotationProcessor "com.google.dagger:dagger-compiler:2.27"
+
 
     // reactive
     implementation "io.reactivex.rxjava3:rxjava:3.0.6"
@@ -51,4 +74,7 @@ dependencies {
     implementation 'com.jakewharton:butterknife:10.2.3'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.3'
 
+    //FCM
+    implementation "com.google.firebase:firebase-analytics:17.5.0"
+    implementation "com.google.firebase:firebase-messaging:20.2.4"
 }

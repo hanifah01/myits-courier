@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">myITS Courier</string>
+    <!--App Message-->
+    <string name="api_retry_error">Mohon coba kembali!</string>
+    <string name="api_default_error">Mohon untuk mencoba kembali!</string>
+    <string name="some_error">Tidak ada koneksi internet!</string>
+    <string name="no_internet_connection">Tidak ada koneksi internet!</string>
+    <string name="retry">Ulangi</string>
+
 </resources>
