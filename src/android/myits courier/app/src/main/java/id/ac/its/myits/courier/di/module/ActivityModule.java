@@ -7,6 +7,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import dagger.Module;
 import dagger.Provides;
 import id.ac.its.myits.courier.di.ActivityContext;
+import id.ac.its.myits.courier.di.PerActivity;
+import id.ac.its.myits.courier.ui.login.LoginMvpPresenter;
+import id.ac.its.myits.courier.ui.login.LoginMvpView;
+import id.ac.its.myits.courier.ui.login.LoginPresenter;
+import id.ac.its.myits.courier.ui.main.MainMvpPresenter;
+import id.ac.its.myits.courier.ui.main.MainMvpView;
+import id.ac.its.myits.courier.ui.main.MainPresenter;
 import id.ac.its.myits.courier.utils.rx.CourierAppScheduler;
 import id.ac.its.myits.courier.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
@@ -38,5 +45,20 @@ public class ActivityModule {
     @Provides
     SchedulerProvider provideSchedulerProvider() {
         return new CourierAppScheduler();
+    }
+
+    @Provides
+    @PerActivity
+    LoginMvpPresenter<LoginMvpView> provideLoginPresenter(
+            LoginPresenter<LoginMvpView> presenter) {
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+
+    MainMvpPresenter<MainMvpView> provideMainPresenter(
+            MainPresenter<MainMvpView> presenter){
+        return presenter;
     }
 }

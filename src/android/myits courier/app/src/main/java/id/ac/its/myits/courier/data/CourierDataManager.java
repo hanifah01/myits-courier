@@ -7,8 +7,10 @@ import javax.inject.Singleton;
 
 import id.ac.its.myits.courier.data.network.ApiHeader;
 import id.ac.its.myits.courier.data.network.ApiHelper;
+import id.ac.its.myits.courier.data.network.model.courier.UserInfo;
 import id.ac.its.myits.courier.data.pref.PreferencesHelper;
 import id.ac.its.myits.courier.di.ApplicationContext;
+import io.reactivex.Observable;
 
 @Singleton
 public class CourierDataManager implements DataManager {
@@ -153,5 +155,10 @@ public class CourierDataManager implements DataManager {
     @Override
     public ApiHeader getApiHeader() {
         return mApiHelper.getApiHeader();
+    }
+
+    @Override
+    public Observable<UserInfo> doGetUserInfo() {
+        return mApiHelper.doGetUserInfo();
     }
 }

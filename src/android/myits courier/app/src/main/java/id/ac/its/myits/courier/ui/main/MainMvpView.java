@@ -1,4 +1,6 @@
 package id.ac.its.myits.courier.ui.main;
 
-public interface MainMvpView {
+import id.ac.its.myits.courier.ui.base.MvpView;
+
+public interface MainMvpView extends MvpView {
 }

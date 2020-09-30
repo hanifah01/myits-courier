@@ -40,6 +40,7 @@ import id.ac.its.myits.courier.R;
 import id.ac.its.myits.courier.di.component.ActivityComponent;
 import id.ac.its.myits.courier.di.component.DaggerActivityComponent;
 import id.ac.its.myits.courier.di.module.ActivityModule;
+import id.ac.its.myits.courier.ui.login.LoginActivity;
 import id.ac.its.myits.courier.utils.CommonUtils;
 import id.ac.its.myits.courier.utils.NetworkUtils;
 
