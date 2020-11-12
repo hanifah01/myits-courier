@@ -56,7 +56,6 @@ public class ActivityModule {
 
     @Provides
     @PerActivity
-
     MainMvpPresenter<MainMvpView> provideMainPresenter(
             MainPresenter<MainMvpView> presenter){
         return presenter;

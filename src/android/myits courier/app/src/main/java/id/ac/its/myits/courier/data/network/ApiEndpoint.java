@@ -4,4 +4,6 @@ import id.ac.its.myits.courier.BuildConfig;
 
 public final class ApiEndpoint {
     public static final String ENDPOINT_MYITS_USERINFO = BuildConfig.DEV_MYITS_URL + "/userinfo";
+
+    public static final String ENDPOINT_TOKEN_SSO = BuildConfig.DEV_MYITS_URL + "/token";
 }

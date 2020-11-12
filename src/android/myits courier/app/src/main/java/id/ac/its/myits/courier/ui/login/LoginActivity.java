@@ -1,7 +1,6 @@
 package id.ac.its.myits.courier.ui.login;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +8,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import net.openid.appauth.AuthState;
@@ -31,7 +29,6 @@ import id.ac.its.myits.courier.R;
 import id.ac.its.myits.courier.ui.base.BaseActivity;
 import id.ac.its.myits.courier.ui.main.MainActivity;
 import id.ac.its.myits.courier.utils.AppLogger;
-import id.ac.its.myits.courier.utils.AuthStateManager;
 
 public class LoginActivity extends BaseActivity implements LoginMvpView {
 
@@ -49,7 +46,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     private int RC_AUTH = 100;
     AuthorizationService mAuthService;
-    AuthStateManager mStateManager;
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -69,7 +65,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         mPresenter.onAttach(LoginActivity.this);
 
         mAuthService = new AuthorizationService(this);
-        mStateManager= AuthStateManager.getInstance(this);
 
         setUp();
     }
@@ -103,7 +98,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
         AuthorizationRequest authRequest = authRequestBuilder
                 .setScope("profile openid")
-                .setPrompt("login")
                 .build();
 
         Intent authIntent = mAuthService.getAuthorizationRequestIntent(authRequest);
@@ -119,7 +113,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
             if (resp != null) {
                 mAuthService = new AuthorizationService(this);
-                mStateManager.updateAfterAuthorization(resp,ex);
 
                 mAuthService.performTokenRequest(
                         resp.createTokenExchangeRequest(),
@@ -128,9 +121,11 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                                     TokenResponse resp, AuthorizationException ex) {
                                 if (resp != null) {
                                     // exchange succeeded
-                                    mStateManager.updateAfterTokenResponse(resp,ex);
                                     AppLogger.d(LOG_TAG + " access token " + resp.accessToken);
-                                    mPresenter.onPersistAccessToken(resp.accessToken);
+                                    id.ac.its.myits.courier.data.network.model.token.TokenResponse tokenResponse = new id.ac.its.myits.courier.data.network.model.token.TokenResponse();
+                                    tokenResponse.setAccessToken(resp.accessToken);
+                                    tokenResponse.setRefreshToken(resp.refreshToken);
+                                    mPresenter.onPersistAccessToken(tokenResponse);
                                     mPresenter.onLoginSuccesful();
 
 
@@ -148,21 +143,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         } else {
             // ...
         }
-
-        if (mStateManager.getCurrent().isAuthorized()){
-
-            AppLogger.d(LOG_TAG + "Done");
-            mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, new AuthState.AuthStateAction() {
-                @Override
-                public void execute(@Nullable String accessToken, @Nullable String idToken, @Nullable AuthorizationException ex) {
-                    if (accessToken!=null){
-                        AppLogger.d(LOG_TAG + "IS AUTHORIZED " + accessToken);
-                        mPresenter.onPersistAccessToken(accessToken);
-                        mPresenter.onLoginSuccesful();
-                    }
-                }
-            });
-        }
     }
 
     @Override
@@ -173,25 +153,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
         startActivity(intent);
     }
 
-    @Override
-    public void checkAuthorized() {
-        if (mStateManager.getCurrent().isAuthorized()){
-            AppLogger.d(LOG_TAG + "Done");
-            mStateManager.getCurrent().performActionWithFreshTokens(mAuthService, new AuthState.AuthStateAction() {
-                @Override
-                public void execute(@Nullable String accessToken, @Nullable String idToken, @Nullable AuthorizationException ex) {
-                    if (accessToken!=null){
-                        AppLogger.d(LOG_TAG + "IS AUTHORIZED " + accessToken);
-                        mPresenter.onPersistAccessToken(accessToken);
-                        mPresenter.onLoginSuccesful();
-                    }
-                    else {
-                        Toast.makeText(LoginActivity.this, "Sesi berakhir, harap melakukan login lagi", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
-        }
-    }
 
     @Override
     protected void onDestroy() {

@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import id.ac.its.myits.courier.data.DataManager;
 import id.ac.its.myits.courier.data.network.model.courier.UserInfo;
+import id.ac.its.myits.courier.data.network.model.token.TokenResponse;
 import id.ac.its.myits.courier.ui.base.BasePresenter;
 import id.ac.its.myits.courier.utils.AppLogger;
 import id.ac.its.myits.courier.utils.rx.SchedulerProvider;
@@ -21,17 +22,18 @@ public class LoginPresenter <V extends LoginMvpView> extends BasePresenter<V>
     }
 
     @Override
-    public void onPersistAccessToken(String accessToken) {
-        getDataManager().setAccessToken(accessToken);
-
-        getDataManager().updateApiHeader(accessToken);
+    public void onPersistAccessToken(TokenResponse tokenResponse) {
+        //getDataManager().setAccessToken(tokenResponse.getAccessToken());
+        //getDataManager().setRefreshToken(tokenResponse.getRefreshToken());
+        AppLogger.d("onPersistaccesstoken " + tokenResponse.getAccessToken());
+        getDataManager().updateApiHeader(tokenResponse.getAccessToken());
     }
 
     @Override
     public void onUserCheck() {
         if (isUserLoggedIn()) {
             AppLogger.d("User is logged in!");
-            getMvpView().checkAuthorized();
+            getMvpView().openMainActivity();
         }
     }
 
