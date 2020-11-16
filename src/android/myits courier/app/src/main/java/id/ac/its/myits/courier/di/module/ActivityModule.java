@@ -14,6 +14,9 @@ import id.ac.its.myits.courier.ui.login.LoginPresenter;
 import id.ac.its.myits.courier.ui.main.MainMvpPresenter;
 import id.ac.its.myits.courier.ui.main.MainMvpView;
 import id.ac.its.myits.courier.ui.main.MainPresenter;
+import id.ac.its.myits.courier.ui.splash.SplashMvpPresenter;
+import id.ac.its.myits.courier.ui.splash.SplashMvpView;
+import id.ac.its.myits.courier.ui.splash.SplashPresenter;
 import id.ac.its.myits.courier.utils.rx.CourierAppScheduler;
 import id.ac.its.myits.courier.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
@@ -58,6 +61,13 @@ public class ActivityModule {
     @PerActivity
     MainMvpPresenter<MainMvpView> provideMainPresenter(
             MainPresenter<MainMvpView> presenter){
+        return presenter;
+    }
+
+    @Provides
+    @PerActivity
+    SplashMvpPresenter<SplashMvpView> provideSplashPresenter(
+            SplashPresenter<SplashMvpView> presenter) {
         return presenter;
     }
 }

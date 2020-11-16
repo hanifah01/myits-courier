@@ -12,6 +12,10 @@ public class TokenResponse {
     @Expose
     private String refreshToken;
 
+    @SerializedName("scope")
+    @Expose
+    private String scope;
+
     public TokenResponse() {
     }
 
@@ -29,5 +33,13 @@ public class TokenResponse {
 
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    public String getScope() {
+        return scope;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
     }
 }

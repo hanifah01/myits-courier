@@ -38,8 +38,8 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
     @BindView(R.id.button_login)
     Button buttonLogin;
 
-    private final String AUTH_ENDPOINT = BuildConfig.DEV_MYITS_URL + "/authorize";
-    private final String TOKEN_ENDPOINT = BuildConfig.DEV_MYITS_URL + "/token";
+    private final String AUTH_ENDPOINT = BuildConfig.MYITS_URL + "/authorize";
+    private final String TOKEN_ENDPOINT = BuildConfig.MYITS_URL + "/token";
     private final Uri REDIRECT_URI = Uri.parse(BuildConfig.REDIRECT_URI);
     private final String CLIENT_ID = BuildConfig.CLIENT_ID;
     public static final String LOG_TAG = "AppAuthSample";
@@ -49,6 +49,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     public static Intent getStartIntent(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
+        intent.setAction("id.ac.its.myits.courier.MAIN");
         return intent;
     }
 
@@ -71,7 +72,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @Override
     protected void setUp() {
-        mPresenter.onUserCheck();
+
     }
 
     @OnClick(R.id.button_login) void onLoginClick(View v){
@@ -122,6 +123,11 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                                 if (resp != null) {
                                     // exchange succeeded
                                     AppLogger.d(LOG_TAG + " access token " + resp.accessToken);
+                                    AppLogger.d(LOG_TAG + " refresh token " + resp.refreshToken);
+                                    AppLogger.d(LOG_TAG + " scope " + resp.scope);
+                                    AppLogger.d(LOG_TAG + " tokentype " + resp.tokenType);
+                                    AppLogger.d(LOG_TAG + " expires " + resp.accessTokenExpirationTime);
+
                                     id.ac.its.myits.courier.data.network.model.token.TokenResponse tokenResponse = new id.ac.its.myits.courier.data.network.model.token.TokenResponse();
                                     tokenResponse.setAccessToken(resp.accessToken);
                                     tokenResponse.setRefreshToken(resp.refreshToken);
@@ -156,8 +162,6 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
 
     @Override
     protected void onDestroy() {
-        mAuthService.dispose();
-        mAuthService = null;
         super.onDestroy();
     }
 }

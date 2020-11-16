@@ -42,11 +42,11 @@ public class RefreshTokenInterceptor implements Interceptor {
                 if (anResponse.isSuccess()) {
                     if (anResponse.getOkHttpResponse().code() == 200) {
                         dataManager.setAccessToken(anResponse.getResult().getAccessToken());
-                       // dataManager.setRefreshToken(anResponse.getResult().getRefreshToken());
+                        dataManager.setRefreshToken(anResponse.getResult().getRefreshToken());
 
                         dataManager.updateApiHeader(anResponse.getResult().getAccessToken());
 
-                        //AppLogger.d("Refresh token " + anResponse.getResult().getRefreshToken() );
+                        AppLogger.d("Refresh token " + anResponse.getResult().getRefreshToken() );
                         AppLogger.d("Refresh token successful");
 
                         Request.Builder builder = request.newBuilder();
@@ -84,7 +84,7 @@ public class RefreshTokenInterceptor implements Interceptor {
 
         final TokenRequest.RefreshTokenRequest request = new TokenRequest.RefreshTokenRequest();
         request.setRefreshToken(currentRefreshToken);
-        AppLogger.d("currentrefreshtoken" + currentRefreshToken);
+        AppLogger.d("currentrefreshtoken " + currentRefreshToken);
         request.setGrantType("refresh_token");
         request.setClientId(BuildConfig.CLIENT_ID);
         request.setClientSecret(BuildConfig.CLIENT_SECRET);

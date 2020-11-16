@@ -20,21 +20,16 @@ public class LoginPresenter <V extends LoginMvpView> extends BasePresenter<V>
                           CompositeDisposable compositeDisposable) {
         super(dataManager, schedulerProvider, compositeDisposable);
     }
+     private UserInfo userInfo;
 
     @Override
     public void onPersistAccessToken(TokenResponse tokenResponse) {
-        //getDataManager().setAccessToken(tokenResponse.getAccessToken());
-        //getDataManager().setRefreshToken(tokenResponse.getRefreshToken());
-        AppLogger.d("onPersistaccesstoken " + tokenResponse.getAccessToken());
-        getDataManager().updateApiHeader(tokenResponse.getAccessToken());
-    }
+        getDataManager().setAccessToken(tokenResponse.getAccessToken());
+        getDataManager().setRefreshToken(tokenResponse.getRefreshToken());
 
-    @Override
-    public void onUserCheck() {
-        if (isUserLoggedIn()) {
-            AppLogger.d("User is logged in!");
-            getMvpView().openMainActivity();
-        }
+        //AppLogger.d("accesstoken " + tokenResponse.getAccessToken());
+        //AppLogger.d("refreshtoken " + tokenResponse.getRefreshToken());
+        getDataManager().updateApiHeader(tokenResponse.getAccessToken());
     }
 
     @Override
@@ -47,6 +42,7 @@ public class LoginPresenter <V extends LoginMvpView> extends BasePresenter<V>
                     @Override
                     public void accept(UserInfo userInfo) throws Exception {
                         AppLogger.d("AppAuthSample "+ "userinfo " + userInfo.getPreferredUsername());
+                        onPersistUser();
                         getMvpView().openMainActivity();
                         getMvpView().hideLoading();
                     }
@@ -59,5 +55,11 @@ public class LoginPresenter <V extends LoginMvpView> extends BasePresenter<V>
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onPersistUser() {
+        setActiveUserId(2020); //ini hardcode
+        AppLogger.d("Active user id: %s | %s", getDataManager().getActiveUserId(), getActiveUserId());
     }
 }
