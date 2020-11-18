@@ -98,7 +98,7 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                         REDIRECT_URI); // the redirect URI to which the auth response is sent
 
         AuthorizationRequest authRequest = authRequestBuilder
-                .setScope("profile openid")
+                .setScope("profile")
                 .build();
 
         Intent authIntent = mAuthService.getAuthorizationRequestIntent(authRequest);
@@ -124,15 +124,12 @@ public class LoginActivity extends BaseActivity implements LoginMvpView {
                                     // exchange succeeded
                                     AppLogger.d(LOG_TAG + " access token " + resp.accessToken);
                                     AppLogger.d(LOG_TAG + " refresh token " + resp.refreshToken);
-                                    AppLogger.d(LOG_TAG + " scope " + resp.scope);
-                                    AppLogger.d(LOG_TAG + " tokentype " + resp.tokenType);
-                                    AppLogger.d(LOG_TAG + " expires " + resp.accessTokenExpirationTime);
 
                                     id.ac.its.myits.courier.data.network.model.token.TokenResponse tokenResponse = new id.ac.its.myits.courier.data.network.model.token.TokenResponse();
                                     tokenResponse.setAccessToken(resp.accessToken);
                                     tokenResponse.setRefreshToken(resp.refreshToken);
                                     mPresenter.onPersistAccessToken(tokenResponse);
-                                    mPresenter.onLoginSuccesful();
+                                    //mPresenter.onLoginSuccesful();
 
 
                                 } else {

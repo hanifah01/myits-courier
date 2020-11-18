@@ -30,6 +30,8 @@ public class LoginPresenter <V extends LoginMvpView> extends BasePresenter<V>
         //AppLogger.d("accesstoken " + tokenResponse.getAccessToken());
         //AppLogger.d("refreshtoken " + tokenResponse.getRefreshToken());
         getDataManager().updateApiHeader(tokenResponse.getAccessToken());
+        onPersistUser();
+        getMvpView().openMainActivity();
     }
 
     @Override

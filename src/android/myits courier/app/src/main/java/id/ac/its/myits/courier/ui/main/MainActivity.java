@@ -44,7 +44,7 @@ public class MainActivity extends BaseActivity implements MainMvpView {
 
     @Override
     protected void setUp() {
-        mPresenter.test();
+        //mPresenter.test();
     }
 
     @OnClick(R.id.button_logout) void onLogoutClick(View v){
